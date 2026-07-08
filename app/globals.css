@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #7c6ef7;
+  --accent-light: #9d92f9;
+  --accent-glow: rgba(124, 110, 247, 0.15);
+  --bg-primary: #0a0a0f;
+  --bg-card: #111118;
+  --bg-card-hover: #16161f;
+  --border: rgba(255,255,255,0.06);
+  --text-muted: #6b7280;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-primary);
+  color: #e5e7eb;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+section { padding: 80px 0; }
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(124, 110, 247, 0.3);
+  transform: translateY(-2px);
+}
+
+.tag {
+  background: var(--accent-glow);
+  color: var(--accent-light);
+  border: 1px solid rgba(124,110,247,0.2);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.section-label {
+  color: var(--accent-light);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
