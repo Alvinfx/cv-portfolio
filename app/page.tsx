@@ -4,6 +4,7 @@ import { AboutSection } from "./components/AboutSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { DesignSection } from "./components/DesignSection";
+import { ChainPulseSection } from "./components/ChainPulseSection";
 import { VideoSection } from "./components/VideoSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { ContactSection } from "./components/ContactSection";
@@ -21,6 +22,7 @@ export default function Home() {
         <ExperienceSection />
         <ProjectsSection />
         <DesignSection />
+        <ChainPulseSection />
         <VideoSection />
         <SkillsSection />
         <ContactSection />
