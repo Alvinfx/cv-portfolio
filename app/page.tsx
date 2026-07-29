@@ -5,6 +5,7 @@ import { ExperienceSection } from "./components/ExperienceSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { DesignSection } from "./components/DesignSection";
 import { ChainPulseSection } from "./components/ChainPulseSection";
+import { CarLinkSection } from "./components/CarLinkSection";
 import { VideoSection } from "./components/VideoSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { ContactSection } from "./components/ContactSection";
@@ -23,6 +24,7 @@ export default function Home() {
         <ProjectsSection />
         <DesignSection />
         <ChainPulseSection />
+        <CarLinkSection />
         <VideoSection />
         <SkillsSection />
         <ContactSection />

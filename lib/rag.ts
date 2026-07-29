@@ -107,6 +107,20 @@ const keywordMap: Record<string, string[]> = {
   "university": ["education"],
   "degree": ["education"],
   "certif": ["certifications"],
+
+  // CarLink keywords
+  "carlink": ["project-carlink", "skills-ux"],
+  "car link": ["project-carlink", "skills-ux"],
+  "car marketplace": ["project-carlink"],
+  "vin checker": ["project-carlink"],
+  "vin": ["project-carlink"],
+  "nigeria car": ["project-carlink"],
+  "swipe car": ["project-carlink"],
+  "car rental": ["project-carlink"],
+  "car app": ["project-carlink"],
+  "jiji": ["project-carlink"],
+  "cars45": ["project-carlink"],
+  "autochek": ["project-carlink"],
 };
 
 export function retrieveContext(query: string): RetrievedContext {
