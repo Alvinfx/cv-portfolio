@@ -118,7 +118,7 @@ export function CarLinkSection() {
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="card overflow-hidden mb-8">
 
           {/* Grid with side arrows */}
-          <div className="relative flex items-center gap-2 p-4" style={{ background: "#0a0a0f" }}>
+          <div className="relative flex items-center gap-2 p-4" style={{ background: "var(--bg-primary)" }}>
 
             {/* Prev arrow */}
             <button

@@ -48,7 +48,7 @@ export function ChainPulseSection() {
         <div className="grid lg:grid-cols-5 gap-6">
           {/* Screen grid */}
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="lg:col-span-3 card overflow-hidden">
-            <div className="p-4 grid grid-cols-2 gap-3" style={{ background: "#0a0a0f" }}>
+            <div className="p-4 grid grid-cols-2 gap-3" style={{ background: "var(--bg-primary)" }}>
               {screens.map((screen, i) => (
                 <motion.div key={screen.src}
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}

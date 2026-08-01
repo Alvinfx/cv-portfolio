@@ -1,33 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --accent: #7c6ef7;
-  --accent-light: #9d92f9;
-  --accent-glow: rgba(124, 110, 247, 0.15);
-  --bg-primary: #0a0a0f;
-  --bg-card: #111118;
-  --bg-card-hover: #16161f;
-  --border: rgba(255,255,255,0.06);
-  --text-muted: #6b7280;
+  --bg-primary: #242423;
+  --bg-card: #333533;
+  --bg-card-hover: #3a3c38;
+  --accent: #f5cb5c;
+  --accent-light: #f7d57a;
+  --accent-glow: rgba(245, 203, 92, 0.1);
+  --text-primary: #e8eddf;
+  --text-muted: #cfdbd5;
+  --border: rgba(207, 219, 213, 0.08);
+  --border-hover: rgba(245, 203, 92, 0.3);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg-primary);
-  color: #e5e7eb;
+  color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
 section { padding: 80px 0; }
 
 .gradient-text {
-  background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -36,37 +38,39 @@ section { padding: 80px 0; }
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.25s ease;
 }
+
 .card:hover {
   background: var(--bg-card-hover);
-  border-color: rgba(124, 110, 247, 0.3);
-  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
 }
 
 .tag {
-  background: var(--accent-glow);
-  color: var(--accent-light);
-  border: 1px solid rgba(124,110,247,0.2);
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 12px;
+  background: rgba(245, 203, 92, 0.08);
+  color: var(--accent);
+  border: 1px solid rgba(245, 203, 92, 0.18);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
   font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 .section-label {
-  color: var(--accent-light);
-  font-size: 13px;
+  color: var(--accent);
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .section-title {
-  font-size: clamp(28px, 4vw, 42px);
+  font-size: clamp(26px, 4vw, 40px);
   font-weight: 700;
-  color: #fff;
-  line-height: 1.2;
+  color: var(--text-primary);
+  line-height: 1.15;
 }
