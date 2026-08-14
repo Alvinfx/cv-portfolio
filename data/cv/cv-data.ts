@@ -51,7 +51,7 @@ export const cvData: CVSection[] = [
   {
     id: "project-chainpulse",
     title: "ChainPulse - Web3 Portfolio Tracker (UI/UX Case Study)",
-    content: `ChainPulse is a multi-chain crypto portfolio and on-chain activity tracker, designed end-to-end as a Figma product design case study. Process covered: market research, competitive analysis of Zerion, Zapper, and DeBank, user segments and problem statements, full information architecture, and four core flows — Dashboard, Wallet Detail, Alerts, and Onboarding — in a token-based Night/Day design system with reusable components and Figma variables. A prototype walkthrough video is available on YouTube.`,
+    content: `ChainPulse is a multi-chain crypto portfolio and on-chain activity tracker, designed end-to-end as a Figma product design case study. Process covered: market research, competitive analysis of Zerion, Zapper, and DeBank, user segments and problem statements, full information architecture, and four core flows: Dashboard, Wallet Detail, Alerts, and Onboarding, in a token-based Night/Day design system with reusable components and Figma variables. A prototype walkthrough video is available on YouTube.`,
     category: "design",
   },
   {
@@ -81,7 +81,7 @@ export const cvData: CVSection[] = [
   {
     id: "project-codexero",
     title: "CodeXero v2 Campaign",
-    content: `Video content campaign for Cluster Protocol's CodeXero v2 — complete voiceover script and storyboard for Web3 developer tooling launch.`,
+    content: `Video content campaign for Cluster Protocol's CodeXero v2, including the complete voiceover script and storyboard for Web3 developer tooling launch.`,
     category: "projects",
   },
   {
@@ -164,7 +164,7 @@ export const contactInfo = {
 };
 
 export const coreDomains = [
-  { name: "AI Data Annotation", description: "2+ years annotating text, images, code, audio/video for LLM training", icon: "🤖" },
-  { name: "Web3 & Crypto", description: "6+ years market analysis, blockchain research, DeFi strategy", icon: "⛓️" },
-  { name: "Graphics & UX Design", description: "Brand systems, UI/UX, content design in Figma & Canva", icon: "🎨" },
+  { name: "AI Data Annotation", description: "2+ years annotating text, images, code, audio/video for LLM training" },
+  { name: "Web3 & Crypto", description: "6+ years market analysis, blockchain research, DeFi strategy" },
+  { name: "Graphics & UX Design", description: "Brand systems, UI/UX, content design in Figma & Canva" },
 ];

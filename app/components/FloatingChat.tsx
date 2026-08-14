@@ -1,169 +1,244 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
-interface Message { id: string; role: "user" | "assistant"; content: string; }
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "./Icon";
 
-const SUGGESTED = [
-  "Tell me about your AI annotation work",
-  "What's your Web3 experience?",
+interface Source {
+  id: string;
+  title: string;
+  href: string;
+}
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  sources?: Source[];
+}
+
+const suggested = [
+  "Tell me about ChainPulse",
   "Walk me through CarLink",
-  "What design tools do you use?",
+  "What is his Web3 experience?",
+  "What AI evaluation skills does he have?",
 ];
 
 export function FloatingChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: "greeting", role: "assistant", content: "Hey — I'm Chidozirim's AI. Ask me about his work, projects, or experience." },
+    {
+      id: "greeting",
+      role: "assistant",
+      content: "Hi, I am the portfolio assistant. Ask about Chidozirim's work, projects, skills, or experience.",
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const messageIdRef = useRef(0);
 
-  useEffect(() => { if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, open]);
+  useEffect(() => {
+    if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, open, loading]);
 
   const send = async (text: string) => {
-    if (!text.trim() || loading) return;
-    const userMsg: Message = { id: `u-${Date.now()}`, role: "user", content: text };
-    setMessages(prev => [...prev, userMsg]);
-    setInput(""); setLoading(true); setError(null);
+    const trimmed = text.trim();
+    if (!trimmed || loading) return;
+
+    messageIdRef.current += 1;
+    const userMessage: Message = {
+      id: `u-${messageIdRef.current}`,
+      role: "user",
+      content: trimmed,
+    };
+
+    setMessages((previous) => [...previous, userMessage]);
+    setInput("");
+    setLoading(true);
+    setError(null);
+
     try {
-      const res = await fetch("/api/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, userMsg].filter(m => m.id !== "greeting").map(m => ({ role: m.role, content: m.content })),
+          messages: [...messages, userMessage]
+            .filter((message) => message.id !== "greeting")
+            .map((message) => ({ role: message.role, content: message.content })),
         }),
       });
-      if (!res.ok) throw new Error((await res.json()).error || "Failed");
-      const data = await res.json();
-      setMessages(prev => [...prev, { id: `a-${Date.now()}`, role: "assistant", content: data.response }]);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
-    } finally { setLoading(false); }
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "The portfolio assistant is unavailable right now.");
+
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: `a-${messageIdRef.current}`,
+          role: "assistant",
+          content: data.response,
+          sources: data.sources,
+        },
+      ]);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "The portfolio assistant is unavailable right now.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-4 md:right-8 z-50 w-[calc(100vw-32px)] max-w-sm flex flex-col rounded-xl overflow-hidden shadow-2xl"
-            style={{ height: "460px", background: "var(--bg-card)", border: "1px solid var(--border)" }}>
-
-            <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: "var(--border)", background: "var(--bg-primary)" }}>
-              <img src="/avatar.jpg" alt="Chidozirim" className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-                style={{ border: "1px solid var(--accent)" }} />
-              <div className="flex-1">
-                <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>Ask Chidozirim</p>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>AI Avatar</p>
+          <motion.aside
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
+            className="fixed bottom-[126px] right-4 z-[80] flex w-[calc(100vw-32px)] max-w-[368px] flex-col overflow-hidden rounded-[18px] border border-[var(--color-line)] bg-[var(--color-surface)] shadow-[0_18px_48px_rgba(23,23,21,.13)] md:right-6"
+            style={{ height: "min(620px, calc(100vh - 108px))" }}
+            aria-label="Portfolio Assistant"
+          >
+            <div className="flex items-center gap-3 bg-[var(--color-dark)] px-4 py-4 text-[var(--color-canvas)]">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-[rgba(255,255,255,.24)]">
+                <Image src="/avatar.jpg" alt="" fill sizes="36px" className="object-cover object-top" />
               </div>
-              <button onClick={() => setOpen(false)} className="transition-opacity hover:opacity-60"
-                style={{ color: "var(--text-muted)" }}>
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-                </svg>
+              <div className="min-w-0 flex-1">
+                <p className="text-[13px] font-semibold">Portfolio Assistant</p>
+                <p className="mt-0.5 text-[10px] text-[rgba(244,240,232,.58)]">Answers from portfolio content</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-[rgba(244,240,232,.72)] hover:bg-[rgba(255,255,255,.08)] hover:text-[var(--color-canvas)]"
+                aria-label="Close portfolio assistant"
+              >
+                <Icon name="close" size={18} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-              {messages.map((m) => (
-                <div key={m.id} className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start items-end"}`}>
-                  {m.role === "assistant" && (
-                    <img src="/avatar.jpg" alt="" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
-                  )}
-                  <div className="max-w-[82%] px-3 py-2 rounded-lg text-sm leading-relaxed"
-                    style={m.role === "user"
-                      ? { background: "var(--accent)", color: "#242423" }
-                      : { background: "var(--bg-primary)", color: "var(--text-muted)", border: "1px solid var(--border)" }}>
-                    {m.content}
+            <div className="flex-1 overflow-y-auto px-4 py-4">
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div className="max-w-[88%]">
+                      <div
+                        className={`rounded-[12px] px-3.5 py-3 text-[13px] leading-relaxed ${
+                          message.role === "user"
+                            ? "bg-[var(--color-olive-deep)] text-[var(--color-canvas)]"
+                            : "border border-[var(--color-line)] bg-[var(--color-paper)] text-[var(--color-ink-2)]"
+                        }`}
+                      >
+                        {message.content}
+                      </div>
+
+                      {message.role === "assistant" && message.sources && message.sources.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          {message.sources.map((source) => (
+                            <a
+                              key={source.id}
+                              href={source.href}
+                              className="rounded-[3px] border border-[var(--color-line)] bg-[var(--color-taupe-soft)] px-2 py-1 text-[10px] font-medium text-[var(--color-ink-2)] hover:border-[#beb7ac]"
+                            >
+                              {source.title}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {messages.length === 1 && (
-                <div className="space-y-1.5 pt-1">
-                  {SUGGESTED.map((q, i) => (
-                    <motion.button key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.07 }}
-                      onClick={() => send(q)}
-                      className="w-full text-left text-xs px-3 py-2 rounded transition-all hover:opacity-80"
-                      style={{ color: "var(--text-muted)", border: "1px solid var(--border)", background: "var(--bg-primary)" }}>
-                      {q}
-                    </motion.button>
-                  ))}
-                </div>
-              )}
-
-              {loading && (
-                <div className="flex justify-start items-end gap-2">
-                  <img src="/avatar.jpg" alt="" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
-                  <div className="px-3 py-2 rounded-lg flex gap-1.5"
-                    style={{ background: "var(--bg-primary)", border: "1px solid var(--border)" }}>
-                    {[0,1,2].map(i => (
-                      <motion.div key={i} className="w-1.5 h-1.5 rounded-full"
-                        style={{ background: "var(--accent)" }}
-                        animate={{ scale: [1, 1.4, 1] }}
-                        transition={{ duration: 0.7, delay: i * 0.15, repeat: Infinity }} />
-                    ))}
+                {messages.length === 1 && (
+                  <div className="pt-1">
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[.08em] text-[var(--color-muted)]">Suggested questions</p>
+                    <div className="space-y-2">
+                      {suggested.map((question) => (
+                        <button
+                          key={question}
+                          type="button"
+                          onClick={() => send(question)}
+                          className="w-full rounded-[4px] border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2.5 text-left text-[12px] text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-paper)]"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {error && (
-                <div className="text-xs px-3 py-2 rounded-lg" style={{ color: "#f87171", background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.15)" }}>
-                  {error}
-                </div>
-              )}
-              <div ref={bottomRef} />
-            </div>
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="rounded-[12px] border border-[var(--color-line)] bg-[var(--color-paper)] px-3.5 py-3 text-[12px] text-[var(--color-muted)]">
+                      Searching portfolio...
+                    </div>
+                  </div>
+                )}
 
-            <div className="px-3 py-3 border-t" style={{ borderColor: "var(--border)" }}>
-              <div className="flex gap-2">
-                <input value={input} onChange={e => setInput(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && !e.shiftKey && send(input)}
-                  placeholder="Ask anything..." disabled={loading}
-                  className="flex-1 text-sm px-3 py-2 rounded outline-none disabled:opacity-50"
-                  style={{ background: "var(--bg-primary)", color: "var(--text-primary)", border: "1px solid var(--border)" }} />
-                <button onClick={() => send(input)} disabled={loading || !input.trim()}
-                  className="w-9 h-9 rounded flex items-center justify-center transition-opacity disabled:opacity-30 hover:opacity-80"
-                  style={{ background: "var(--accent)" }}>
-                  <svg width="14" height="14" fill="none" stroke="#242423" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
+                {error && (
+                  <div className="rounded-[6px] border border-[rgba(166,77,61,.32)] bg-[rgba(166,77,61,.06)] px-3 py-2.5 text-[12px] text-[var(--state-error)]">
+                    {error}
+                  </div>
+                )}
+                <div ref={bottomRef} />
               </div>
             </div>
-          </motion.div>
+
+            <div className="border-t border-[var(--color-line)] bg-[var(--color-surface)] p-3">
+              <div className="flex gap-2">
+                <label className="sr-only" htmlFor="portfolio-question">Ask about the portfolio</label>
+                <input
+                  id="portfolio-question"
+                  value={input}
+                  onChange={(event) => setInput(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !event.shiftKey) {
+                      event.preventDefault();
+                      send(input);
+                    }
+                  }}
+                  placeholder="Ask about projects, skills or experience..."
+                  disabled={loading}
+                  className="h-11 min-w-0 flex-1 rounded-[4px] border border-[var(--color-line)] bg-[var(--color-paper)] px-3 text-[12px] text-[var(--color-ink)] outline-none placeholder:text-[var(--color-muted)] disabled:opacity-50"
+                />
+                <button
+                  type="button"
+                  onClick={() => send(input)}
+                  disabled={loading || !input.trim()}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[4px] bg-[var(--color-dark)] text-[var(--color-canvas)] transition-opacity disabled:opacity-40"
+                  aria-label="Send question"
+                >
+                  <Icon name="send" size={16} />
+                </button>
+              </div>
+              <p className="mt-2 text-center text-[9px] text-[var(--color-muted)]">Answers are based on portfolio content.</p>
+            </div>
+          </motion.aside>
         )}
       </AnimatePresence>
 
-      <motion.button onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-4 md:right-8 z-50 rounded-full overflow-hidden"
-        style={{ width: 56, height: 56, border: "2px solid var(--accent)", boxShadow: "0 4px 20px rgba(245,203,92,0.25)" }}
-        whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}
-        initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1.2, type: "spring" }}>
-        <img src="/avatar.jpg" alt="Chidozirim" className="w-full h-full object-cover" />
-        {open && (
-          <div className="absolute inset-0 flex items-center justify-center"
-            style={{ background: "rgba(36,36,35,0.7)" }}>
-            <svg width="18" height="18" fill="none" stroke="white" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-            </svg>
-          </div>
-        )}
-        {!open && (
-          <motion.div className="absolute inset-0 rounded-full pointer-events-none"
-            style={{ border: "2px solid var(--accent)" }}
-            animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} />
-        )}
+      <motion.button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.25 }}
+        className="fixed bottom-4 right-4 z-[80] flex flex-col items-center gap-1.5 bg-transparent p-0 text-[var(--color-ink)] md:bottom-6 md:right-6"
+        aria-expanded={open}
+        aria-label={open ? "Close Portfolio Assistant" : "Open Portfolio Assistant"}
+      >
+        <span
+          aria-hidden="true"
+          className="block h-16 w-16 rounded-full border-2 border-[var(--color-paper)] bg-cover bg-[position:50%_28%] shadow-[0_8px_22px_rgba(23,23,21,.14)]"
+          style={{ backgroundImage: 'url("/avatar.jpg")' }}
+        />
+        <span className="rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--color-ink)] shadow-[0_4px_12px_rgba(23,23,21,.07)]">
+          Portfolio Assistant
+        </span>
       </motion.button>
     </>
   );

@@ -1,16 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "./Icon";
 
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const handler = () => {
-      const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
-      setVisible(scrolledToBottom);
+      setVisible(window.scrollY > 520);
     };
-    window.addEventListener("scroll", handler);
+
+    handler();
+    window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
@@ -18,16 +21,15 @@ export function ScrollToTop() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, y: 10 }}
+          type="button"
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
+          exit={{ opacity: 0, y: 8 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-20 right-4 md:right-8 z-40 w-9 h-9 rounded flex items-center justify-center transition-all hover:opacity-80"
-          style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
-          aria-label="Back to top">
-          <svg width="16" height="16" fill="none" stroke="var(--accent)" strokeWidth="2" viewBox="0 0 24 24">
-            <path d="M18 15l-6-6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          className="fixed bottom-4 left-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-line)] bg-[var(--color-surface)] text-[var(--color-ink)] shadow-[0_6px_18px_rgba(23,23,21,.06)] md:bottom-6 md:left-6"
+          aria-label="Back to top"
+        >
+          <Icon name="up" size={18} />
         </motion.button>
       )}
     </AnimatePresence>

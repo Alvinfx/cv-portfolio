@@ -1,6 +1,8 @@
 "use client";
+
+import Image from "next/image";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { useState, useMemo } from "react";
 import { CarouselLightbox } from "./CarouselLightbox";
 
 const designWork = [
@@ -14,59 +16,50 @@ const designWork = [
 
 export function DesignSection() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const lightboxImages = useMemo(() => designWork.map(d => ({ src: d.src })), []);
+  const lightboxImages = useMemo(() => designWork.map((item) => ({ src: item.src })), []);
 
   return (
-    <section id="design">
-      <div className="max-w-6xl mx-auto px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} className="mb-8">
-          <div className="section-label">Design Work</div>
-          <h2 className="section-title mb-2">Graphics & Visual Design</h2>
-          <p className="text-sm max-w-xl" style={{ color: "var(--text-muted)" }}>
-            Brand identity, social media content, and UI mockups. Canva and Figma.
+    <section id="design" className="section-shell section-surface">
+      <div className="site-container">
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="mb-12 grid gap-6 lg:grid-cols-12 lg:items-end"
+        >
+          <div className="lg:col-span-7">
+            <p className="eyebrow">Visual design</p>
+            <h2 className="section-heading">Graphics and visual work.</h2>
+          </div>
+          <p className="body-copy max-w-[470px] lg:col-span-5 lg:justify-self-end">
+            Brand identity, social media content, and UI mockups created with Canva and Figma.
           </p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} className="card p-5 mb-10 border-l-2"
-          style={{ borderLeftColor: "var(--accent)" }}>
-          <div className="flex items-start gap-4">
-            <span className="text-2xl">📐</span>
-            <div>
-              <h3 className="font-bold text-base mb-1" style={{ color: "var(--text-primary)" }}>Product / UX Design</h3>
-              <p className="text-sm leading-relaxed max-w-2xl mb-4" style={{ color: "var(--text-muted)" }}>
-                Design sprints, user interviews, and onboarding flow work at FlexiSAF Edusoft.
-                Figma-based design systems built from components. See the ChainPulse and CarLink case studies below.
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {["Figma", "Design Sprints", "User Interviews", "Onboarding Flows", "Component Systems"].map(t => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="grid grid-cols-3 gap-3">
-          {designWork.map((item, i) => (
-            <motion.div key={item.id}
-              initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-              onClick={() => setLightboxIndex(i)}
-              className="relative overflow-hidden rounded-lg cursor-zoom-in group"
-              style={{ height: "150px" }}>
-              <img src={item.src} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108" />
-              <div className="absolute inset-0 transition-all bg-black/0 group-hover:bg-black/30 flex items-center justify-center">
-                <svg className="opacity-0 group-hover:opacity-100 transition-opacity" width="20" height="20"
-                  fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M15 3h6m0 0v6m0-6L10 14M9 21H3m0 0v-6m0 6l11-11" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </motion.div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
+          {designWork.map((item, index) => (
+            <motion.button
+              key={item.id}
+              type="button"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.04 }}
+              onClick={() => setLightboxIndex(index)}
+              className="group relative aspect-[4/3] overflow-hidden border border-[var(--color-line)] bg-[var(--color-paper)]"
+              aria-label={`Open visual design piece ${index + 1}`}
+            >
+              <Image
+                src={item.src}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 50vw, 33vw"
+                className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+              />
+            </motion.button>
           ))}
         </div>
-        <p className="text-xs mt-3" style={{ color: "#3a3c38" }}>Click any image · use arrow keys to browse</p>
+        <p className="meta-copy mt-4">Select any image to view the work at full size.</p>
       </div>
 
       <CarouselLightbox

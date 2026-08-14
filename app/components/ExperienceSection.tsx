@@ -1,5 +1,7 @@
 "use client";
+
 import { motion } from "framer-motion";
+import { Icon } from "./Icon";
 
 const experiences = [
   {
@@ -11,7 +13,7 @@ const experiences = [
     bullets: [
       "Evaluate AI-generated outputs across text, image, code, and audio/video modalities",
       "Conduct prompt evaluation and response quality assessment as part of RLHF workflows",
-      "Perform image annotation: object detection, segmentation, and scene description",
+      "Perform image annotation including object detection, segmentation, and scene description",
       "Apply structured rubrics to rate LLM outputs across high-volume tasks",
     ],
   },
@@ -78,44 +80,72 @@ const experiences = [
 
 export function ExperienceSection() {
   return (
-    <section id="experience">
-      <div className="max-w-6xl mx-auto px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} className="mb-12">
-          <div className="section-label">Experience</div>
-          <h2 className="section-title">Work History</h2>
+    <section id="experience" className="section-shell section-dark">
+      <div className="site-container">
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="mb-14 grid gap-6 lg:grid-cols-12 lg:items-end"
+        >
+          <div className="lg:col-span-7">
+            <p className="eyebrow text-[var(--color-accent-soft)]">Experience</p>
+            <h2 className="section-heading text-[var(--color-canvas)]">Work across AI, markets, design, and operations.</h2>
+          </div>
+          <p className="max-w-[470px] text-[15px] leading-relaxed text-[rgba(244,240,232,.65)] lg:col-span-5 lg:justify-self-end">
+            A chronological view of the roles and freelance work currently represented on this portfolio.
+          </p>
         </motion.div>
 
         <div className="relative">
-          <div className="absolute left-0 md:left-7 top-0 bottom-0 w-px" style={{ background: "var(--border)" }} />
-          <div className="space-y-8">
-            {experiences.map((exp, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-                className="flex gap-6 md:gap-8 pl-6 md:pl-20 relative">
-                <div className="absolute left-[-4px] md:left-[24px] top-2 w-2 h-2 rounded-full"
-                  style={{ background: "var(--accent)", boxShadow: "0 0 6px var(--accent)" }} />
-                <div className="card p-5 flex-1">
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+          <div className="absolute bottom-0 left-[9px] top-1 w-px bg-[rgba(255,255,255,.18)] md:left-[145px]" />
+          <div className="space-y-0">
+            {experiences.map((experience, index) => (
+              <motion.article
+                key={`${experience.role}-${experience.company}`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.035 }}
+                className="relative grid gap-5 border-b border-[rgba(255,255,255,.14)] pb-9 pt-1 md:grid-cols-[120px_1fr] md:gap-10 md:pb-10 md:pt-0"
+              >
+                <span className="absolute left-[5px] top-[7px] h-[9px] w-[9px] rounded-full border-2 border-[var(--color-dark)] bg-[var(--color-accent-soft)] md:left-[141px]" />
+                <div className="pl-8 md:pl-0">
+                  <p className="text-[12px] font-semibold text-[var(--color-accent-soft)]">{experience.period}</p>
+                  <p className="mt-1 text-[11px] text-[rgba(244,240,232,.48)]">{experience.location}</p>
+                </div>
+
+                <div className="pl-8 md:pl-0">
+                  <div className="grid gap-5 lg:grid-cols-[270px_1fr] lg:gap-10">
                     <div>
-                      <h3 className="font-semibold text-base" style={{ color: "var(--text-primary)" }}>{exp.role}</h3>
-                      <p className="text-sm mt-0.5" style={{ color: "var(--text-muted)" }}>{exp.company} · {exp.location}</p>
+                      <h3 className="font-[var(--font-display)] text-[26px] font-semibold leading-none text-[var(--color-canvas)]">
+                        {experience.role}
+                      </h3>
+                      <p className="mt-2 text-[13px] font-medium text-[rgba(244,240,232,.64)]">{experience.company}</p>
                     </div>
-                    <span className="text-xs whitespace-nowrap" style={{ color: "var(--text-muted)" }}>{exp.period}</span>
-                  </div>
-                  <ul className="space-y-1.5 mb-4">
-                    {exp.bullets.map((b, j) => (
-                      <li key={j} className="text-sm flex gap-2" style={{ color: "var(--text-muted)" }}>
-                        <span style={{ color: "var(--accent)" }} className="mt-0.5 shrink-0">›</span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex flex-wrap gap-1.5">
-                    {exp.tags.map((t) => <span key={t} className="tag">{t}</span>)}
+                    <div>
+                      <ul className="space-y-2">
+                        {experience.bullets.map((bullet) => (
+                          <li key={bullet} className="flex gap-3 text-[13px] leading-relaxed text-[rgba(244,240,232,.68)]">
+                            <Icon name="check" size={14} className="mt-1 shrink-0 text-[var(--color-accent-soft)]" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {experience.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex min-h-6 items-center rounded-[3px] border border-[rgba(255,255,255,.16)] px-2 py-1 text-[10px] font-medium text-[rgba(244,240,232,.68)]"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>
