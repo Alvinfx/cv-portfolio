@@ -1,18 +1,13 @@
 "use client";
 
 import { AboutSection } from "./components/AboutSection";
-import { CarLinkSection } from "./components/CarLinkSection";
-import { ChainPulseSection } from "./components/ChainPulseSection";
 import { ContactSection } from "./components/ContactSection";
-import { DesignSection } from "./components/DesignSection";
-import { ExperienceSection } from "./components/ExperienceSection";
-import { FloatingChat } from "./components/FloatingChat";
 import { HeroSection } from "./components/HeroSection";
 import { Navbar } from "./components/Navbar";
+import { ProcessSection } from "./components/ProcessSection";
 import { ProjectsSection } from "./components/ProjectsSection";
-import { ScrollToTop } from "./components/ScrollToTop";
-import { SkillsSection } from "./components/SkillsSection";
-import { VideoSection } from "./components/VideoSection";
+import { ServicesSection } from "./components/ServicesSection";
+import { ToolsSection } from "./components/ToolsSection";
 
 export default function Home() {
   return (
@@ -20,18 +15,13 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <AboutSection />
         <ProjectsSection />
-        <ChainPulseSection />
-        <CarLinkSection />
-        <DesignSection />
-        <SkillsSection />
-        <ExperienceSection />
-        <VideoSection />
+        <AboutSection />
+        <ServicesSection />
+        <ProcessSection />
+        <ToolsSection />
         <ContactSection />
       </main>
-      <FloatingChat />
-      <ScrollToTop />
     </div>
   );
 }

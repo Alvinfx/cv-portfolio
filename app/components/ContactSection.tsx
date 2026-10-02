@@ -3,99 +3,66 @@
 import { motion } from "framer-motion";
 import { Icon } from "./Icon";
 
-const contactItems = [
+const links = [
   { label: "Email", value: "chidozirim.ca@gmail.com", href: "mailto:chidozirim.ca@gmail.com", icon: "mail" as const },
-  { label: "Telegram", value: "t.me/xvVicinity", href: "https://t.me/xvVicinity", icon: "telegram" as const },
-  { label: "Location", value: "Abuja, Nigeria", icon: "location" as const },
-];
-
-const socialItems = [
   { label: "LinkedIn", value: "linkedin.com/in/chidozirim-ahuakagha", href: "https://linkedin.com/in/chidozirim-ahuakagha", icon: "linkedin" as const },
   { label: "GitHub", value: "github.com/Alvinfx", href: "https://github.com/Alvinfx", icon: "github" as const },
-  { label: "X / Twitter", value: "@XpnxvVicinity", href: "https://x.com/XpnxvVicinity", icon: "x" as const },
+  { label: "X", value: "@XpnxvVicinity", href: "https://x.com/XpnxvVicinity", icon: "x" as const },
 ];
 
 export function ContactSection() {
   return (
-    <section id="contact" className="section-shell">
+    <section id="contact" className="section-shell pb-0">
       <div className="site-container">
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          className="overflow-hidden rounded-[6px] bg-[var(--color-dark)] text-[var(--color-canvas)]"
+          viewport={{ once: true }}
+          className="overflow-hidden rounded-[12px] bg-[var(--color-dark)] text-[var(--color-paper)]"
         >
-          <div className="grid lg:grid-cols-12">
-            <div className="border-b border-[rgba(255,255,255,.14)] p-7 md:p-10 lg:col-span-5 lg:border-b-0 lg:border-r">
-              <p className="text-[11px] font-semibold uppercase tracking-[.09em] text-[var(--color-accent-soft)]">Contact</p>
-              <h2 className="mt-4 max-w-[450px] font-[var(--font-display)] text-[48px] font-semibold leading-[.95] tracking-[-.025em] md:text-[62px]">
-                Let&apos;s work together.
+          <div className="grid gap-8 p-7 md:p-10 lg:grid-cols-[1.2fr_.8fr] lg:p-12">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[.1em] text-[var(--color-accent)]">Let&apos;s build something useful</p>
+              <h2 className="mt-4 max-w-[720px] text-[clamp(36px,5vw,58px)] font-semibold leading-[1.02] tracking-[-.04em]">
+                Have something you want to build or automate?
               </h2>
-              <p className="mt-6 max-w-[460px] text-[15px] leading-relaxed text-[rgba(244,240,232,.65)]">
-                Open to AI annotation projects, Web3 research, design work, and remote roles.
+              <p className="mt-6 max-w-[680px] text-[14px] leading-[1.75] text-[rgba(255,255,255,.62)]">
+                I am currently open to product design, development, and workflow automation projects.
               </p>
-              <a href="mailto:chidozirim.ca@gmail.com" className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-[4px] bg-[var(--color-canvas)] px-5 text-[13px] font-semibold text-[var(--color-dark)]">
-                Send an email
-                <Icon name="arrow-right" size={16} />
+              <p className="mt-3 max-w-[720px] text-[14px] leading-[1.75] text-[rgba(255,255,255,.62)]">
+                If you have a product that needs to be designed or built, or a business process that involves too much repetitive manual work, feel free to reach out.
+              </p>
+              <a href="mailto:chidozirim.ca@gmail.com" className="button-accent mt-8">
+                Get in Touch
+                <Icon name="arrow-right" size={15} />
               </a>
             </div>
 
-            <div className="p-7 md:p-10 lg:col-span-7">
-              <div className="grid gap-7 sm:grid-cols-2">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-[rgba(244,240,232,.45)]">Direct contact</p>
-                  <div className="mt-5 space-y-5">
-                    {contactItems.map((item) => (
-                      <div key={item.label} className="flex items-start gap-3">
-                        <Icon name={item.icon} size={18} className="mt-0.5 shrink-0 text-[var(--color-accent-soft)]" />
-                        <div>
-                          <p className="text-[11px] text-[rgba(244,240,232,.45)]">{item.label}</p>
-                          {item.href ? (
-                            <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined} className="mt-1 block text-[13px] font-medium text-[var(--color-canvas)] hover:underline">
-                              {item.value}
-                            </a>
-                          ) : (
-                            <p className="mt-1 text-[13px] font-medium text-[var(--color-canvas)]">{item.value}</p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {links.map((item) => (
+                <a key={item.label} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined} className="group flex items-start gap-3 border-b border-[rgba(255,255,255,.1)] pb-4 last:border-0">
+                  <Icon name={item.icon} size={17} className="mt-0.5 shrink-0 text-[var(--color-accent)]" />
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-[.08em] text-[rgba(255,255,255,.38)]">{item.label}</p>
+                    <p className="mt-1 break-all text-[12px] font-medium text-[var(--color-paper)] group-hover:underline">{item.value}</p>
                   </div>
-                </div>
-
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[.08em] text-[rgba(244,240,232,.45)]">Connect</p>
-                  <div className="mt-5 space-y-5">
-                    {socialItems.map((item) => (
-                      <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group">
-                        <Icon name={item.icon} size={18} className="mt-0.5 shrink-0 text-[var(--color-accent-soft)]" />
-                        <div>
-                          <p className="text-[11px] text-[rgba(244,240,232,.45)]">{item.label}</p>
-                          <p className="mt-1 text-[13px] font-medium text-[var(--color-canvas)] group-hover:underline">{item.value}</p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                </a>
+              ))}
             </div>
           </div>
         </motion.div>
 
-        <footer className="flex flex-col justify-between gap-5 border-t border-[var(--color-line)] pb-1 pt-8 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center border border-[var(--color-ink)] font-[var(--font-display)] text-[21px]">CA</span>
-            <div>
-              <p className="text-[12px] font-semibold">Chidozirim Ahuakagha</p>
-              <p className="mt-0.5 text-[10px] text-[var(--color-muted)]">© 2026 Chidozirim Ahuakagha</p>
-            </div>
+        <footer className="flex flex-col justify-between gap-5 py-8 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-[12px] font-semibold">Chidozirim Ahuakagha</p>
+            <p className="mt-1 text-[10px] text-[var(--color-muted)]">Product Designer &amp; AI Automation Developer</p>
           </div>
-          <div className="flex flex-wrap gap-5 text-[11px] text-[var(--color-muted)]">
+          <nav className="flex flex-wrap gap-5 text-[11px] text-[var(--color-muted)]" aria-label="Footer navigation">
             <a href="#projects" className="hover:text-[var(--color-ink)]">Work</a>
             <a href="#about" className="hover:text-[var(--color-ink)]">About</a>
-            <a href="#skills" className="hover:text-[var(--color-ink)]">Skills</a>
-            <a href="#experience" className="hover:text-[var(--color-ink)]">Experience</a>
-          </div>
+            <a href="#services" className="hover:text-[var(--color-ink)]">Services</a>
+            <a href="#contact" className="hover:text-[var(--color-ink)]">Contact</a>
+          </nav>
         </footer>
       </div>
     </section>

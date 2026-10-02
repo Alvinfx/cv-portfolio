@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { retrieveContext, formatContextForLLM } from "@/lib/rag";
+import { formatContextForLLM, retrieveContext } from "@/lib/rag";
 
-const SYSTEM_PROMPT = `You are the portfolio assistant for Chidozirim Ahuakagha. Answer only from the portfolio context supplied below. Keep answers concise, specific, and professional. Mention dates, tools, projects, or roles only when they appear in the supplied context. Do not add companies, clients, metrics, qualifications, or claims that are not in the context. If the context does not support an answer, say that you could not find that information in the portfolio and suggest a related question.`;
+const SYSTEM_PROMPT = "You are the portfolio assistant for Chidozirim Ahuakagha, whose current professional positioning is Product Designer & AI Automation Developer. Answer only from the verified portfolio context supplied below. Keep answers concise, useful, and professional. Mention projects, dates, tools, responsibilities, status, or outcomes only when they appear in the supplied context. Do not fabricate experience, metrics, clients, tools, revenue, conversion results, project completion states, or technical capabilities. Do not infer private or undisclosed projects. If the supplied context does not contain the requested information, clearly say that the portfolio does not contain information about that topic. Older verified experience such as AI evaluation, Web3, TradeStellar, FlexiSAF, IRYS, graphic design, and content work can be discussed when it appears in the supplied context.";
 
 interface Message {
   role: "user" | "assistant";
@@ -9,15 +9,17 @@ interface Message {
 }
 
 function sectionHref(id: string) {
-  if (id === "project-chainpulse") return "#chainpulse";
-  if (id === "project-carlink") return "#carlink";
-  if (id === "video-channels") return "#video";
-  if (id.startsWith("project-")) return "#projects";
-  if (id.startsWith("exp-")) return "#experience";
-  if (id.startsWith("skills-")) return "#skills";
-  if (id === "education" || id === "certifications") return "#skills";
-  if (id === "contact") return "#contact";
-  return "#about";
+  if (id === "project-ace-one-autos") return "/work/ace-one-autos";
+  if (id === "project-epsilon-ai") return "/work/epsilon-ai";
+  if (id === "project-promptvault") return "/work/promptvault";
+  if (id === "project-chainpulse") return "/work/chainpulse";
+  if (id === "project-carlink") return "/work/carlink";
+  if (id.startsWith("project-")) return "/#projects";
+  if (id.startsWith("exp-")) return "/#about";
+  if (id.startsWith("skills-")) return "/#tools";
+  if (id === "education" || id === "certifications") return "/#about";
+  if (id === "contact") return "/#contact";
+  return "/#about";
 }
 
 export async function POST(request: NextRequest) {
@@ -35,18 +37,18 @@ export async function POST(request: NextRequest) {
 
     const context = retrieveContext(lastMessage.content);
     const formattedContext = formatContextForLLM(context);
-    const systemMessage = `${SYSTEM_PROMPT}\n\n${formattedContext}`;
+    const systemMessage = SYSTEM_PROMPT + "\n\n" + formattedContext;
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        Authorization: "Bearer " + process.env.GROQ_API_KEY,
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         max_tokens: 500,
-        temperature: 0.35,
+        temperature: 0.2,
         messages: [
           { role: "system", content: systemMessage },
           ...messages.map((message: Message) => ({ role: message.role, content: message.content })),
@@ -56,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorPayload = await response.json();
-      throw new Error(errorPayload.error?.message || `Groq API error: ${response.status}`);
+      throw new Error(errorPayload.error?.message || "Groq API error: " + response.status);
     }
 
     const data = await response.json();
@@ -69,6 +71,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       response: reply,
       contextUsed: context.sections.length,
+      relevanceScore: context.relevanceScore,
       sources,
     });
   } catch (error) {

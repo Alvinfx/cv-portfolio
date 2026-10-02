@@ -7,98 +7,112 @@ export interface RetrievedContext {
 }
 
 const keywordMap: Record<string, string[]> = {
-  // AI annotation
-  "ai annotation": ["exp-ai-annotator", "skills-ai"],
-  "annotation": ["exp-ai-annotator", "skills-ai"],
-  "prompt evaluation": ["exp-ai-annotator", "skills-ai"],
-  "rlhf": ["exp-ai-annotator", "skills-ai"],
-  "data annotation": ["exp-ai-annotator", "skills-ai"],
-  "llm": ["exp-ai-annotator", "skills-ai"],
-  "ai training": ["exp-ai-annotator", "skills-ai"],
-  "outlier": ["exp-ai-annotator", "skills-ai"],
-  "stellar ai": ["exp-ai-annotator", "skills-ai"],
-  "mercor": ["exp-ai-annotator", "skills-ai"],
-  "toloka": ["exp-ai-annotator", "skills-ai"],
-  "cvat": ["exp-ai-annotator", "skills-ai"],
-  "multimodal": ["exp-ai-annotator", "skills-ai"],
-  "computer vision": ["exp-ai-annotator", "skills-ai"],
+  // Ace One Autos
+  "ace one autos": ["project-ace-one-autos"],
+  "aceoneautos": ["project-ace-one-autos"],
+  "aceoneautosltd": ["project-ace-one-autos"],
+  "automotive website": ["project-ace-one-autos"],
+  "automotive": ["project-ace-one-autos"],
+  "glasgow": ["project-ace-one-autos"],
+  "client work": ["project-ace-one-autos"],
+  "full stack": ["project-ace-one-autos", "skills-development"],
+  "full-stack": ["project-ace-one-autos", "skills-development"],
+  "frontend": ["project-ace-one-autos", "skills-development", "project-promptvault"],
+  "backend": ["project-ace-one-autos", "skills-development"],
+  "deployment": ["project-ace-one-autos", "skills-development"],
+  "website development": ["project-ace-one-autos", "skills-development"],
+  "test drive": ["project-ace-one-autos"],
+  "part exchange": ["project-ace-one-autos"],
+  "vehicle": ["project-ace-one-autos", "project-carlink"],
 
-  // Web3 & crypto
-  "web3": ["exp-analyst", "exp-bd", "skills-web3", "project-singcity", "project-promptvault"],
-  "crypto": ["exp-analyst", "skills-web3", "project-tokenlogic", "video-channels"],
-  "blockchain": ["exp-analyst", "exp-bd", "skills-web3", "project-singcity", "project-promptvault"],
-  "forex": ["exp-analyst", "skills-web3", "skills-research"],
-  "market analysis": ["exp-analyst", "skills-research"],
-  "defi": ["exp-analyst", "skills-web3"],
-  "nft": ["exp-analyst", "skills-web3"],
-  "on-chain": ["exp-analyst", "skills-web3"],
-  "tradestellar": ["exp-analyst"],
-  "irys": ["exp-bd", "project-promptvault"],
+  // Epsilon AI and automation
+  "epsilon": ["project-epsilon-ai"],
+  "epsilon ai": ["project-epsilon-ai"],
+  "workflow automation": ["project-epsilon-ai", "skills-automation"],
+  "automation": ["project-epsilon-ai", "skills-automation"],
+  "n8n": ["project-epsilon-ai", "skills-automation"],
+  "fastapi": ["project-epsilon-ai", "skills-development", "skills-automation"],
+  "langgraph": ["project-epsilon-ai", "skills-automation"],
+  "webhook": ["skills-automation"],
+  "api development": ["project-epsilon-ai", "skills-development", "skills-automation"],
+  "agents": ["project-epsilon-ai", "skills-automation"],
+  "agent system": ["project-epsilon-ai", "skills-automation"],
+  "approval workflow": ["project-epsilon-ai", "skills-automation"],
+  "human approval": ["project-epsilon-ai", "skills-automation"],
+  "sqlite": ["project-epsilon-ai", "skills-automation"],
+  "ai development": ["project-epsilon-ai", "skills-automation"],
+  "ai integration": ["project-epsilon-ai", "skills-automation"],
 
-  // Design
-  "design": ["exp-graphics", "exp-ux", "skills-design", "skills-ux", "project-chainpulse"],
-  "figma": ["exp-graphics", "exp-ux", "skills-ux", "project-chainpulse"],
-  "canva": ["exp-graphics", "skills-design"],
-  "ui": ["exp-ux", "skills-ux", "project-chainpulse"],
-  "ux": ["exp-ux", "skills-ux", "project-chainpulse"],
-  "ui/ux": ["exp-ux", "skills-ux", "project-chainpulse"],
-  "product design": ["exp-ux", "skills-ux", "project-chainpulse"],
-  "brand": ["exp-graphics", "skills-design"],
-  "graphic": ["exp-graphics", "skills-design"],
-  "branding": ["exp-graphics", "skills-design"],
-  "flexisaf": ["exp-ux"],
-  "user research": ["exp-ux", "skills-ux"],
-  "wireframe": ["skills-ux", "project-chainpulse"],
-  "prototype": ["skills-ux", "project-chainpulse"],
-  "design system": ["skills-ux", "project-chainpulse"],
-
-  // ChainPulse
-  "chainpulse": ["project-chainpulse", "skills-ux"],
-  "chain pulse": ["project-chainpulse", "skills-ux"],
-  "portfolio tracker": ["project-chainpulse"],
-  "zerion": ["project-chainpulse"],
-  "zapper": ["project-chainpulse"],
-  "debank": ["project-chainpulse"],
-  "competitive analysis": ["project-chainpulse", "skills-ux"],
-  "information architecture": ["project-chainpulse", "skills-ux"],
-
-  // SingCity
-  "singcity": ["project-singcity"],
-  "sing city": ["project-singcity"],
-  "karaoke": ["project-singcity"],
-  "singing": ["project-singcity"],
+  // Product design
+  "product design": ["skills-product-design", "project-chainpulse", "project-carlink", "project-ace-one-autos", "exp-ux"],
+  "ui/ux": ["skills-product-design", "project-chainpulse", "project-carlink", "project-ace-one-autos", "exp-ux"],
+  "ux": ["skills-product-design", "project-chainpulse", "project-carlink", "exp-ux"],
+  "figma": ["skills-product-design", "project-chainpulse", "project-carlink", "exp-ux"],
+  "wireframe": ["skills-product-design", "project-chainpulse", "project-carlink"],
+  "design system": ["skills-product-design", "project-chainpulse", "project-carlink"],
+  "user research": ["skills-product-design", "project-chainpulse", "project-carlink", "exp-ux"],
+  "marketplace": ["project-carlink", "skills-product-design"],
 
   // PromptVault
   "promptvault": ["project-promptvault"],
   "prompt vault": ["project-promptvault"],
+  "irys": ["project-promptvault", "exp-bd", "skills-research"],
 
-  // TokenLogic & video
-  "tokenlogic": ["project-tokenlogic", "video-channels"],
-  "token logic": ["project-tokenlogic", "video-channels"],
-  "youtube": ["video-channels", "project-tokenlogic"],
-  "video": ["video-channels", "skills-video"],
-  "content creation": ["video-channels", "skills-video"],
-  "capcut": ["video-channels", "skills-video"],
-  "channel": ["video-channels", "project-tokenlogic"],
-  "mindovercomfort": ["video-channels"],
-  "raregem": ["video-channels"],
+  // ChainPulse
+  "chainpulse": ["project-chainpulse"],
+  "chain pulse": ["project-chainpulse"],
+  "portfolio tracker": ["project-chainpulse"],
+  "zerion": ["project-chainpulse"],
+  "zapper": ["project-chainpulse"],
+  "debank": ["project-chainpulse"],
 
-  // Projects general
-  "project": ["project-chainpulse", "project-singcity", "project-promptvault", "project-tokenlogic"],
-  "built": ["project-singcity", "project-promptvault", "project-chainpulse"],
-  "live": ["project-singcity", "project-promptvault"],
+  // CarLink
+  "carlink": ["project-carlink"],
+  "car link": ["project-carlink"],
+  "car marketplace": ["project-carlink"],
+  "vin": ["project-carlink"],
+  "jiji": ["project-carlink"],
+  "cars45": ["project-carlink"],
+  "autochek": ["project-carlink"],
 
-  // Skills
-  "skills": ["skills-ai", "skills-design", "skills-ux", "skills-research", "skills-web3", "skills-video", "skills-tech"],
-  "experience": ["exp-ai-annotator", "exp-graphics", "exp-analyst", "exp-bd", "exp-ux"],
+  // Historical projects and background
+  "singcity": ["project-singcity"],
+  "karaoke": ["project-singcity"],
+  "tokenlogic": ["project-tokenlogic"],
+  "codexero": ["project-codexero"],
+  "ai evaluation": ["exp-ai-annotator", "skills-ai-evaluation"],
+  "ai evaluator": ["exp-ai-annotator", "skills-ai-evaluation"],
+  "annotation": ["exp-ai-annotator", "skills-ai-evaluation"],
+  "rlhf": ["exp-ai-annotator", "skills-ai-evaluation"],
+  "cvat": ["exp-ai-annotator", "skills-ai-evaluation"],
+  "web3": ["exp-analyst", "exp-bd", "skills-research", "project-promptvault", "project-singcity"],
+  "crypto": ["exp-analyst", "skills-research", "project-tokenlogic"],
+  "forex": ["exp-analyst", "skills-research"],
+  "tradestellar": ["exp-analyst"],
+  "flexisaf": ["exp-ux"],
+  "graphic design": ["exp-graphics", "skills-design"],
+  "branding": ["exp-graphics", "skills-design"],
+  "video": ["skills-video", "project-tokenlogic"],
+
+  // Development and general portfolio
+  "development": ["skills-development", "project-ace-one-autos", "project-epsilon-ai", "project-promptvault"],
+  "developer": ["skills-development", "project-ace-one-autos", "project-epsilon-ai", "project-promptvault"],
+  "python": ["skills-development", "project-epsilon-ai"],
+  "typescript": ["skills-development", "project-promptvault"],
+  "react": ["skills-development", "project-promptvault"],
+  "what has he built": ["project-ace-one-autos", "project-epsilon-ai", "project-promptvault", "project-chainpulse", "project-carlink"],
+  "what are his projects": ["project-ace-one-autos", "project-epsilon-ai", "project-promptvault", "project-chainpulse", "project-carlink"],
+  "projects": ["project-ace-one-autos", "project-epsilon-ai", "project-promptvault", "project-chainpulse", "project-carlink"],
+  "built": ["project-ace-one-autos", "project-epsilon-ai", "project-promptvault"],
+  "skills": ["skills-product-design", "skills-development", "skills-automation", "skills-ai-evaluation", "skills-design", "skills-research"],
+  "experience": ["exp-ai-annotator", "exp-graphics", "exp-analyst", "exp-bd", "exp-ux", "project-ace-one-autos"],
 
   // Contact
   "contact": ["contact"],
   "email": ["contact"],
-  "telegram": ["contact"],
-  "twitter": ["contact"],
   "linkedin": ["contact"],
   "github": ["contact"],
+  "twitter": ["contact"],
   "location": ["contact"],
   "abuja": ["contact"],
 
@@ -107,24 +121,23 @@ const keywordMap: Record<string, string[]> = {
   "university": ["education"],
   "degree": ["education"],
   "certif": ["certifications"],
-
-  // CarLink keywords
-  "carlink": ["project-carlink", "skills-ux"],
-  "car link": ["project-carlink", "skills-ux"],
-  "car marketplace": ["project-carlink"],
-  "vin checker": ["project-carlink"],
-  "vin": ["project-carlink"],
-  "nigeria car": ["project-carlink"],
-  "swipe car": ["project-carlink"],
-  "car rental": ["project-carlink"],
-  "car app": ["project-carlink"],
-  "jiji": ["project-carlink"],
-  "cars45": ["project-carlink"],
-  "autochek": ["project-carlink"],
 };
 
+const broadProjectIds = [
+  "project-ace-one-autos",
+  "project-epsilon-ai",
+  "project-promptvault",
+  "project-chainpulse",
+  "project-carlink",
+];
+
 export function retrieveContext(query: string): RetrievedContext {
-  const normalizedQuery = query.toLowerCase();
+  const normalizedQuery = query.toLowerCase().trim();
+
+  if (normalizedQuery.includes("sagitarii")) {
+    return { sections: [], query, relevanceScore: 0 };
+  }
+
   const relevantSectionIds = new Set<string>();
   let score = 0;
 
@@ -135,12 +148,11 @@ export function retrieveContext(query: string): RetrievedContext {
     }
   }
 
-  // Always include summary for context
   relevantSectionIds.add("summary");
 
   if (relevantSectionIds.size <= 1) {
-    // Fallback: return broad overview
-    ["exp-ai-annotator", "project-chainpulse", "project-singcity", "project-promptvault", "skills-ai", "skills-ux", "skills-web3"].forEach(id => relevantSectionIds.add(id));
+    broadProjectIds.forEach((id) => relevantSectionIds.add(id));
+    ["skills-product-design", "skills-development", "skills-automation"].forEach((id) => relevantSectionIds.add(id));
     score = 5;
   }
 
@@ -154,10 +166,15 @@ export function retrieveContext(query: string): RetrievedContext {
 }
 
 export function formatContextForLLM(context: RetrievedContext): string {
+  if (context.sections.length === 0) {
+    return "No verified portfolio information matched this question.";
+  }
+
   const formatted = context.sections
-    .map((section) => `**${section.title}**\n${section.content}`)
+    .map((section) => "**" + section.title + "**\n" + section.content)
     .join("\n\n");
-  return `Relevant information from Chidozirim's portfolio:\n\n${formatted}`;
+
+  return "Relevant verified information from Chidozirim's portfolio:\n\n" + formatted;
 }
 
 export function getSectionsByCategory(category: CVSection["category"]): CVSection[] {

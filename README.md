@@ -1,193 +1,126 @@
-# Chidozirim's Interactive AI Portfolio
+# Chidozirim Ahuakagha Portfolio
 
-A full-featured interactive portfolio with an AI chatbot powered by HuggingFace's free LLM tier. Ask about AI annotation, Web3 research, graphics design, and more.
+Portfolio for Chidozirim Ahuakagha, positioned around product design, software development, AI development, and workflow automation.
 
-## 🎨 Design Approach
+The site is a single Next.js application with focused project case studies and a floating RAG-based Portfolio Assistant.
 
-- **Two-column layout**: Chat on left, contextual content on right
-- **RAG-powered chatbot**: Conversations drive discovery through your CV
-- **Zero-cost stack**: Vercel free tier + HuggingFace free inference
-- **Mobile responsive**: Chat-first on mobile, side-by-side on desktop
+## Current stack
 
-## 🛠 Tech Stack
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- Groq chat completions API
+- Custom local retrieval over verified portfolio data
+- Vercel deployment
 
-- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
-- **Animations**: Framer Motion
-- **LLM**: HuggingFace Inference API (Mistral-7B, free tier)
-- **RAG**: Custom keyword-based retrieval system
-- **Deployment**: Vercel
+## Portfolio structure
 
-## 📋 Prerequisites
+The homepage is intentionally curated around current commercially relevant work:
 
-- Node.js 18+ and npm
-- HuggingFace API key (free, from https://huggingface.co/settings/tokens)
-- Vercel account (optional, for deployment)
+1. Hero
+2. Selected Work
+3. About
+4. Services
+5. How I Work
+6. Tools
+7. Contact
+8. Footer
 
-## 🚀 Quick Start
+Featured project routes:
 
-### 1. Clone & Install
+- /work/ace-one-autos
+- /work/epsilon-ai
+- /work/promptvault
+- /work/chainpulse
+- /work/carlink
 
-```bash
-cd cv-portfolio
-npm install
-```
+Historical verified work remains available in the RAG knowledge base even when it is not featured prominently on the homepage.
 
-### 2. Set Up Environment
+## Portfolio Assistant architecture
 
-Create `.env.local` in the project root:
+The assistant preserves the existing local RAG architecture:
 
-```env
-HUGGINGFACE_API_KEY=your_api_key_here
-```
+1. A visitor asks a question through the floating assistant.
+2. POST /api/chat receives the conversation.
+3. lib/rag.ts maps the question to relevant verified entries in data/cv/cv-data.ts.
+4. The retrieved portfolio context is injected into a grounded system prompt.
+5. Groq generates a response using llama-3.3-70b-versatile.
+6. The API returns the answer plus source links to the relevant portfolio section or case-study route.
 
-**Get your HuggingFace API Key:**
-1. Go to https://huggingface.co/settings/tokens
-2. Click "New token"
-3. Give it a name, select "read" role
-4. Copy the token to `.env.local`
+The system prompt instructs the assistant not to invent experience, clients, tools, metrics, project outcomes, or private projects. If the portfolio does not support an answer, it must say that the information is unavailable.
 
-### 3. Run Locally
+## Environment
 
-```bash
-npm run dev
-```
+Create .env.local in the project root:
 
-Open [http://localhost:3000](http://localhost:3000)
+    GROQ_API_KEY=your_groq_api_key_here
 
-### 4. Deploy to Vercel
+Never commit .env.local or API keys.
 
-```bash
-npm i -g vercel
-vercel
-```
+The repository includes .env.example as the safe variable template.
 
-During setup:
-1. Link your GitHub repo
-2. Add environment variable: `HUGGINGFACE_API_KEY=your_key`
-3. Deploy
+## Local development
 
-## 📁 Project Structure
+    npm install
+    npm run dev
 
-```
-cv-portfolio/
-├── app/
-│   ├── api/
-│   │   └── chat/route.ts          # Chat API endpoint
-│   ├── components/
-│   │   ├── ChatInterface.tsx       # Chat UI
-│   │   └── ContentPanel.tsx        # Right sidebar content
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx                    # Main layout
-├── data/
-│   └── cv/
-│       └── cv-data.ts             # Your CV data + contact info
-├── lib/
-│   └── rag.ts                      # RAG retrieval system
-├── public/
-├── .env.example                    # Copy to .env.local
-└── package.json
-```
+Open http://localhost:3000.
 
-## 🔧 Customization
+## Validation
 
-### Update Your CV Data
+    npm run lint
+    npm run build
 
-Edit `data/cv/cv-data.ts`:
-- **`cvData`**: Add/remove CV sections
-- **`contactInfo`**: Update contact details
-- **`coreDomains`**: Update your 3 core professional areas
+A GitHub Actions workflow also runs lint and build checks for pushes and pull requests.
 
-### Change Colors/Theme
+## Deployment
 
-Edit Tailwind classes in components:
-- Primary accent: Change `amber-500` to your preferred color
-- Background: Change `slate-*` colors
+The production site is deployed on Vercel from the GitHub repository.
 
-### Update LLM Model
+Required production environment variable:
 
-In `app/api/chat/route.ts`:
-```typescript
-model: "mistralai/Mistral-7B-Instruct-v0.1",  // Change this
-```
+    GROQ_API_KEY
 
-Other free options:
-- `meta-llama/Llama-2-7b-chat-hf`
-- `tiiuae/falcon-7b-instruct`
+After updating main, Vercel can build and deploy the current application using the configured environment variable.
 
-## 💡 How the RAG System Works
+## Key files
 
-1. **User asks a question** in the chat
-2. **RAG retrieves relevant CV sections** using keyword matching
-3. **LLM generates response** with CV context injected
-4. **Context sections shown** below each message
+    app/
+    ├── api/chat/route.ts
+    ├── components/
+    │   ├── FloatingChat.tsx
+    │   ├── HeroSection.tsx
+    │   ├── ProjectsSection.tsx
+    │   ├── AboutSection.tsx
+    │   ├── ServicesSection.tsx
+    │   ├── ProcessSection.tsx
+    │   ├── ToolsSection.tsx
+    │   └── ContactSection.tsx
+    ├── work/
+    │   ├── ace-one-autos/page.tsx
+    │   ├── epsilon-ai/page.tsx
+    │   ├── promptvault/page.tsx
+    │   ├── chainpulse/page.tsx
+    │   └── carlink/page.tsx
+    ├── globals.css
+    ├── layout.tsx
+    └── page.tsx
 
-Keyword map in `lib/rag.ts` connects queries to CV sections. Extend it for better retrieval.
+    data/cv/cv-data.ts
+    lib/rag.ts
+    public/
 
-## ⚠️ Important: HuggingFace Rate Limits
+## Updating portfolio knowledge
 
-The free tier has limits:
-- ~30 requests/minute per token
-- First response may take 2-5 seconds (cold start)
-- Hitting limits returns `429 error`
+Use data/cv/cv-data.ts as the factual portfolio knowledge source.
 
-**For production**: Use paid HuggingFace tier or self-host LLM.
+When adding a verified project or skill:
 
-## 🎯 Future Enhancements
+1. Add or update the relevant CVSection.
+2. Add retrieval terms in lib/rag.ts.
+3. Add a project-specific source route in app/api/chat/route.ts when appropriate.
+4. Test both direct questions and broad questions before deployment.
 
-1. **Database RAG**: Migrate to Supabase + pgvector for semantic search
-2. **Voice Input**: Add speech-to-text
-3. **Dashboard Stats**: Show token usage, popular questions
-4. **Theme Toggle**: Light/dark mode
-5. **Analytics**: Track conversation topics
-
-## 📝 API Reference
-
-### POST `/api/chat`
-
-Request:
-```json
-{
-  "messages": [
-    { "role": "user", "content": "Tell me about your AI work" }
-  ]
-}
-```
-
-Response:
-```json
-{
-  "response": "...",
-  "contextUsed": 3,
-  "relevanceScore": 85
-}
-```
-
-## 🐛 Troubleshooting
-
-**"Failed to generate response"**
-- Check HuggingFace API key is correct
-- Verify internet connection
-- Check rate limits (wait a few minutes)
-
-**"Chatbot responses are generic"**
-- Check CV data in `data/cv/cv-data.ts` has relevant sections
-- Add keywords to `lib/rag.ts` keyword map
-
-**"Mobile layout looks broken"**
-- Content panel is hidden on mobile (expected)
-- Chat uses full width on small screens
-
-## 📄 License
-
-Personal portfolio - all content is yours to customize.
-
-## 🤝 Support
-
-- Next.js: https://nextjs.org/docs
-- HuggingFace: https://huggingface.co/docs
-- Tailwind: https://tailwindcss.com/docs
-
----
-
-**Built with ❤️ | Zero-cost AI portfolio**
+Do not add unverified metrics, clients, outcomes, tools, or completion states.
