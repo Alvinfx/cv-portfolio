@@ -24,6 +24,16 @@ jobs:
           echo "Portfolio deployment did not become ready in time."
           exit 1
 
+      - name: Diagnose live chat endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAYLOAD="$(jq -nc --arg q "Tell me about Ace One Autos." '{messages:[{role:"user",content:$q}]}')"
+          STATUS="$(curl -sS -o /tmp/chat-response.json -w "%{http_code}" -X POST "https://chidozirim-ahuakagha.vercel.app/api/chat" -H "Content-Type: application/json" --data "$PAYLOAD")"
+          echo "HTTP status: $STATUS"
+          cat /tmp/chat-response.json | jq .
+          test "$STATUS" = "200"
+
       - name: Exercise grounded portfolio questions
         shell: bash
         run: |
