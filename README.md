@@ -46,7 +46,7 @@ The assistant preserves the existing local RAG architecture:
 2. POST /api/chat receives the conversation.
 3. lib/rag.ts maps the question to relevant verified entries in data/cv/cv-data.ts.
 4. The retrieved portfolio context is injected into a grounded system prompt.
-5. Groq generates a response using llama-3.3-70b-versatile.
+5. Groq generates a response using openai/gpt-oss-120b.
 6. The API returns the answer plus source links to the relevant portfolio section or case-study route.
 
 The system prompt instructs the assistant not to invent experience, clients, tools, metrics, project outcomes, or private projects. If the portfolio does not support an answer, it must say that the information is unavailable.
