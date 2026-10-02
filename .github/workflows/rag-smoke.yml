@@ -1,0 +1,65 @@
+name: RAG smoke test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  rag-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Wait for portfolio deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..12}; do
+            if curl -fsS "https://chidozirim-ahuakagha.vercel.app/" | grep -q "Product Designer"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Portfolio deployment did not become ready in time."
+          exit 1
+
+      - name: Exercise grounded portfolio questions
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ask() {
+            local question="$1"
+            curl -fsS -X POST "https://chidozirim-ahuakagha.vercel.app/api/chat" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -nc --arg q "$question" '{messages:[{role:"user",content:$q}]}')"
+          }
+
+          ACE="$(ask "Tell me about Ace One Autos.")"
+          echo "$ACE" | jq -e '.response | length > 20'
+          echo "$ACE" | jq -e '.response | ascii_downcase | contains("ace one autos")'
+
+          ACE_ROLE="$(ask "What did Chidozirim do on the Ace One Autos project?")"
+          echo "$ACE_ROLE" | jq -e '.response | length > 20'
+          echo "$ACE_ROLE" | jq -e '.response | ascii_downcase | contains("design")'
+
+          EPSILON="$(ask "Tell me about Epsilon AI.")"
+          echo "$EPSILON" | jq -e '.response | length > 20'
+          echo "$EPSILON" | jq -e '.response | ascii_downcase | contains("epsilon")'
+
+          DEV="$(ask "What development experience does Chidozirim have?")"
+          echo "$DEV" | jq -e '.response | length > 20'
+
+          AUTOMATION="$(ask "What workflow automation work has he done?")"
+          echo "$AUTOMATION" | jq -e '.response | length > 20'
+          echo "$AUTOMATION" | jq -e '.response | ascii_downcase | contains("epsilon")'
+
+          DESIGN="$(ask "What product design projects has he worked on?")"
+          echo "$DESIGN" | jq -e '.response | length > 20'
+
+          PRIVATE="$(ask "What is Sagitarii CTA?")"
+          echo "$PRIVATE" | jq -e '.response | length > 10'
+          echo "$PRIVATE" | jq -e '.response | ascii_downcase | (contains("does not contain") or contains("could not find") or contains("not contain information") or contains("not available"))'
+
+          echo "All seven RAG smoke tests passed."
