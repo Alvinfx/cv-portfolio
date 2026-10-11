@@ -7,7 +7,8 @@ const links = [
   { label: "Email", value: "chidozirim.ca@gmail.com", href: "mailto:chidozirim.ca@gmail.com", icon: "mail" as const },
   { label: "LinkedIn", value: "linkedin.com/in/chidozirim-ahuakagha", href: "https://linkedin.com/in/chidozirim-ahuakagha", icon: "linkedin" as const },
   { label: "GitHub", value: "github.com/Alvinfx", href: "https://github.com/Alvinfx", icon: "github" as const },
-  { label: "X", value: "@XpnxvVicinity", href: "https://x.com/XpnxvVicinity", icon: "x" as const },
+  { label: "X", value: "@0xVicinity", href: "https://x.com/0xVicinity", icon: "x" as const },
+  { label: "Telegram", value: "@OxVicinity", href: "https://t.me/OxVicinity", icon: "telegram" as const },
 ];
 
 export function ContactSection() {
