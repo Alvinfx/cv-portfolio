@@ -153,7 +153,7 @@ export const cvData: CVSection[] = [
   {
     id: "contact",
     title: "Contact & Social",
-    content: "Email: chidozirim.ca@gmail.com. Location: Abuja, Nigeria. GitHub: https://github.com/Alvinfx. LinkedIn: https://linkedin.com/in/chidozirim-ahuakagha. X: https://x.com/XpnxvVicinity.",
+    content: "Email: chidozirim.ca@gmail.com. Location: Abuja, Nigeria. GitHub: https://github.com/Alvinfx. LinkedIn: https://linkedin.com/in/chidozirim-ahuakagha. X: https://x.com/0xVicinity. Telegram: https://t.me/OxVicinity.",
     category: "summary",
   },
 ];
@@ -165,7 +165,8 @@ export const contactInfo = {
   location: "Abuja, Nigeria",
   github: "https://github.com/Alvinfx",
   linkedin: "https://linkedin.com/in/chidozirim-ahuakagha",
-  twitter: "https://x.com/XpnxvVicinity",
+  twitter: "https://x.com/0xVicinity",
+  telegram: "https://t.me/OxVicinity",
 };
 
 export const coreDomains = [
