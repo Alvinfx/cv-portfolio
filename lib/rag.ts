@@ -113,6 +113,10 @@ const keywordMap: Record<string, string[]> = {
   "linkedin": ["contact"],
   "github": ["contact"],
   "twitter": ["contact"],
+  "x handle": ["contact"],
+  "0xvicinity": ["contact"],
+  "telegram": ["contact"],
+  "oxvicinity": ["contact"],
   "location": ["contact"],
   "abuja": ["contact"],
 
